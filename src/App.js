@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import AddTask from './Components/AddTask';
+import TodoList from './Components/TodoList';
+import './App.css';  // Importation des styles
+
+
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (task) => {
+    if (task.trim() === '') return;
+    setTasks([...tasks, task]);
+  };
+
+  const removeTask = (index) => {
+    const newTasks = tasks.filter((_, i) => i !== index);
+    setTasks(newTasks);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='header-container'>
+      <h1>Todo List & Checklist Dynamique 📝</h1>
+
+      <div className="todo-container">
+        <div className="todo-content">
+          <AddTask addTask={addTask} />
+          <TodoList tasks={tasks} removeTask={removeTask} />
+        </div>
+        </div>
+      </div>
     </div>
   );
 }
